@@ -20,7 +20,7 @@ export default function CalendarPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">Calendar</h1>
-          <p className="text-sm text-muted">June 8–14, 2026 · availability blocks reflect your rules &amp; connected calendars</p>
+          <p className="text-sm text-muted">June 8 to 14, 2026 · availability blocks reflect your rules and connected calendars</p>
         </div>
         <Segmented<"5day" | "week" | "month"> value={view} onChange={setView} size="sm" options={[{ value: "5day", label: "5-day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }]} />
       </div>

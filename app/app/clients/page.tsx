@@ -5,6 +5,7 @@ import { Avatar, Btn, Card, Pill, ScoreRing, Segmented } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { useOverlays } from "@/components/overlays";
 import { useToast } from "@/components/toast";
+import { PageIntro } from "@/components/page-intro";
 import { getClients } from "@/lib/mock-data";
 
 export default function ClientsPage() {
@@ -24,6 +25,7 @@ export default function ClientsPage() {
 
   return (
     <div className="space-y-5">
+      <PageIntro id="clients" tag="Clients" title="Your people, remembered" body="Every client's history, notes, reviews, and payments live in one place. Open anyone to see the full picture before a session, so you always walk in prepared." />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">Clients</h1>

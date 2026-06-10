@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Btn, Card, Pill } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { useToast } from "@/components/toast";
+import { PageIntro } from "@/components/page-intro";
 import { getServices } from "@/lib/mock-data";
 
 interface ServiceDraft {
@@ -52,6 +53,7 @@ export default function ServicesPage() {
 
   return (
     <div className="space-y-5">
+      <PageIntro id="services" tag="Services" title="What you offer, and the rules" body="Each service has a length, price, deposit, and cancellation window. Those settings decide how it can be booked and quietly protect your time." />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">Services</h1>

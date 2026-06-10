@@ -2,6 +2,7 @@
 
 import { Card, SectionTitle } from "@/components/ui";
 import { Icon, type IconName } from "@/components/icons";
+import { PageIntro } from "@/components/page-intro";
 
 const GROUPS: { title: string; items: { name: string; desc: string; icon: IconName }[] }[] = [
   {
@@ -34,9 +35,10 @@ const GROUPS: { title: string; items: { name: string; desc: string; icon: IconNa
 export default function MorePage() {
   return (
     <div className="space-y-6">
+      <PageIntro id="more" tag="More" title="Your workshop" body="The advanced tools you reach for now and then: packages, waitlist, intake forms, templates, and connections. Anything you use daily lives on the main tabs." />
       <div>
         <h1 className="text-xl font-semibold tracking-tight">More</h1>
-        <p className="text-sm text-muted">Advanced tools. Anything you use daily lives on a primary tab — this is the workshop, not the desk.</p>
+        <p className="text-sm text-muted">Advanced tools. Anything you use daily lives on a primary tab. This is the workshop, not the desk.</p>
       </div>
       {GROUPS.map((g) => (
         <div key={g.title}>

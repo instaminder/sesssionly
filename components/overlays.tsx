@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Avatar, Btn, Card, Empty, Pill, ScoreRing, Segmented, Star, Toggle, cx } from "./ui";
 import { Icon } from "./icons";
 import { useToast } from "./toast";
+import { HostAvatar } from "./profile";
 import { HOST, SERVICES, getService, getSessionsForClient } from "@/lib/mock-data";
 import { fmtDay, to12 } from "@/lib/format";
 import { scoreReasons, scoreBand } from "@/lib/session-score";
@@ -231,7 +232,7 @@ function SmartInvite({ toName, onClose }: { toName?: string; onClose: () => void
             </div>
             <div className="bg-white rounded-[12px] border border-line p-4 shadow-sm">
               <div className="flex items-center gap-2.5 pb-3 border-b border-line">
-                <Avatar initials={HOST.initials} size={36} />
+                <HostAvatar size={36} />
                 <div><div className="text-sm font-semibold">{HOST.firstName} {HOST.lastName}</div><div className="text-[11px] text-faint">{HOST.business}</div></div>
               </div>
               <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-ink/90 mt-3 font-sans">{text}</pre>
@@ -261,6 +262,7 @@ function StateCard({ ok, label, okText, badText }: { ok: boolean; label: string;
 function SessionDetail({ session: s, onClose, onOpenClient }: { session: EnrichedSession; onClose: () => void; onOpenClient: (c: Client) => void }) {
   const base = scoreReasons(s);
   const toast = useToast();
+  const [prep, setPrep] = useState(s.prep);
   const [ai, setAi] = useState<AiScore | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -337,7 +339,7 @@ function SessionDetail({ session: s, onClose, onOpenClient }: { session: Enriche
         <Avatar initials={s.client.initials} color={s.client.color} size={48} />
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-lg">{s.client.name}</div>
-          <div className="text-[13px] text-muted">{s.service.name} · {fmtDay(s.day)} · {to12(s.start)}–{to12(s.end)} · {s.location}</div>
+          <div className="text-[13px] text-muted">{s.service.name} · {fmtDay(s.day)} · {to12(s.start)} to {to12(s.end)} · {s.location}</div>
         </div>
       </div>
 
@@ -354,7 +356,7 @@ function SessionDetail({ session: s, onClose, onOpenClient }: { session: Enriche
             <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
               <Pill tone="info">Host-only</Pill>
             </div>
-            <p className="text-[12px] text-muted mt-1.5">{band === "good" ? "Low risk — well prepared." : band === "warn" ? "Some gaps to close before this runs." : "High risk — protect this session."}</p>
+            <p className="text-[12px] text-muted mt-1.5">{band === "good" ? "Low risk. Well prepared." : band === "warn" ? "Some gaps to close before this runs." : "High risk. Protect this session."}</p>
           </div>
         </div>
 
@@ -396,8 +398,17 @@ function SessionDetail({ session: s, onClose, onOpenClient }: { session: Enriche
       </div>
 
       <div className="mb-4">
-        <div className="text-[12px] font-semibold text-faint uppercase mb-2">Prep notes</div>
-        <Card className="!p-4 text-[13px] text-ink/90 leading-relaxed">{s.prep}</Card>
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-[12px] font-semibold text-faint uppercase">Prep notes</div>
+          <button onClick={() => toast("Prep notes saved")} className="text-[12px] text-accent font-medium">Save</button>
+        </div>
+        <textarea
+          value={prep}
+          onChange={(e) => setPrep(e.target.value)}
+          rows={4}
+          placeholder="Add your prep notes for this session…"
+          className="inp !text-[13px] leading-relaxed resize-none"
+        />
       </div>
 
       <div className="mb-4">
@@ -436,7 +447,7 @@ function SessionDetail({ session: s, onClose, onOpenClient }: { session: Enriche
               <Btn size="sm" variant="secondary" className="flex-1" onClick={() => draftFollowUp(fu.kind)}>Regenerate</Btn>
               <Btn size="sm" className="flex-1" onClick={() => { setSent(true); toast(`Sent to ${s.client.name}`); }}>{sent ? "Sent ✓" : "Approve & send"}</Btn>
             </div>
-            {sent && <p className="text-[11px] text-good mt-2">Approved — would send via {fu.channel.toUpperCase()} (host-gated action).</p>}
+            {sent && <p className="text-[11px] text-good mt-2">Approved. Would send via {fu.channel.toUpperCase()} (host-gated action).</p>}
           </Card>
         )}
       </div>

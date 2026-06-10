@@ -14,7 +14,7 @@ import type {
  *
  * Everything the UI needs goes through the accessor functions at the bottom
  * (getHost, getServices, getSessions, ...). When Supabase is wired up, only
- * those functions change — components keep calling the same API.
+ * those functions change, components keep calling the same API.
  */
 
 export const HOST: Host = {
@@ -43,7 +43,7 @@ export const CLIENTS: Client[] = [
     lastSeen: "Yesterday", nextLabel: "Today 10:30 AM", avgScore: 94, lifetime: 1260, color: "#3E5C76",
     prefs: ["Prefers mornings", "Working on Q3 promotion case", "Direct feedback style"],
     notes: [
-      { d: "Jun 8", t: "Session 7 — mapped the promotion conversation. Felt much more confident. Wants to role-play the salary ask next time." },
+      { d: "Jun 8", t: "Session 7, mapped the promotion conversation. Felt much more confident. Wants to role-play the salary ask next time." },
       { d: "May 25", t: "Discussed manager friction. Action: send weekly update email to skip-level." },
     ],
     reviews: [{ d: "May 2026", stars: 5, t: "Minh helped me reframe how I show up in leadership meetings. I got the promotion. Worth every dollar." }],
@@ -56,7 +56,7 @@ export const CLIENTS: Client[] = [
     prefs: ["Reschedules often", "Reach via SMS", "Intake usually incomplete"],
     notes: [{ d: "May 19", t: "No-show on rescheduled session. Sent gentle check-in. Suggested moving to deposit-required booking." }],
     reviews: [],
-    payments: [{ d: "Apr 30", amt: 180, status: "Paid", what: "1:1 Coaching" }, { d: "Jun 7", amt: 50, status: "Unpaid", what: "Deposit — tomorrow" }],
+    payments: [{ d: "Apr 30", amt: 180, status: "Paid", what: "1:1 Coaching" }, { d: "Jun 7", amt: 50, status: "Unpaid", what: "Deposit, tomorrow" }],
   },
   {
     id: "cl_priya", name: "Priya Sharma", initials: "PS", email: "priya.s@example.com", phone: "(206) 555-0143",
@@ -71,8 +71,8 @@ export const CLIENTS: Client[] = [
     id: "cl_marcus", name: "Marcus Chen", initials: "MC", email: "marcus.c@example.com", phone: "(312) 555-0177",
     tag: "Package", since: "2025-01", sessions: 18, cancellations: 1, noShows: 0, balance: 0, depositHeld: 160,
     lastSeen: "Last week", nextLabel: "Today 3:30 PM", avgScore: 88, lifetime: 3840, color: "#5B8266",
-    prefs: ["Monthly package", "Founder — fundraising stress", "Likes structured agendas"],
-    notes: [{ d: "Jun 2", t: "Session focused on board update narrative. Renewal due — package resets Jun 30." }],
+    prefs: ["Monthly package", "Founder, fundraising stress", "Likes structured agendas"],
+    notes: [{ d: "Jun 2", t: "Session focused on board update narrative. Renewal due, package resets Jun 30." }],
     reviews: [{ d: "Mar 2026", stars: 5, t: "The monthly cadence keeps me accountable. Sessionly reminders mean I never miss." }],
     payments: [{ d: "Jun 1", amt: 640, status: "Paid", what: "Monthly Package" }],
   },
@@ -90,9 +90,9 @@ export const CLIENTS: Client[] = [
     tag: "Overdue", since: "2025-08", sessions: 5, cancellations: 0, noShows: 0, balance: 180, depositHeld: 0,
     lastSeen: "Jun 3", nextLabel: "—", avgScore: 79, lifetime: 900, color: "#B45309",
     prefs: ["Invoices monthly", "Slow to pay but reliable"],
-    notes: [{ d: "Jun 3", t: "Session went well. Invoice sent same day — still unpaid." }],
+    notes: [{ d: "Jun 3", t: "Session went well. Invoice sent same day, still unpaid." }],
     reviews: [],
-    payments: [{ d: "Jun 3", amt: 180, status: "Overdue", what: "1:1 Coaching — 6 days overdue" }],
+    payments: [{ d: "Jun 3", amt: 180, status: "Overdue", what: "1:1 Coaching, 6 days overdue" }],
   },
 ];
 
@@ -101,8 +101,8 @@ export const TODAY = "2026-06-09";
 
 export const SESSIONS: Session[] = [
   { id: "ses_1", clientId: "cl_sarah", serviceId: "svc_1on1", day: "2026-06-09", start: "10:30", end: "11:30", confirmed: true, depositPaid: true, intakeDone: true, score: 94, location: "Zoom", prep: "Role-play the salary negotiation. She wants to practice the opening line and how to hold silence after stating her number." },
-  { id: "ses_2", clientId: "cl_priya", serviceId: "svc_disc", day: "2026-06-09", start: "13:00", end: "13:30", confirmed: true, depositPaid: true, intakeDone: false, score: 61, location: "Zoom", prep: "First call. Intake not completed — confirm goals live. Inbound from LinkedIn, exploring a pivot into product management." },
-  { id: "ses_3", clientId: "cl_marcus", serviceId: "svc_intensive", day: "2026-06-09", start: "15:30", end: "17:00", confirmed: true, depositPaid: true, intakeDone: true, score: 88, location: "Zoom", prep: "Board update narrative round 2. Bring the one-pager template. Package renews Jun 30 — flag near end." },
+  { id: "ses_2", clientId: "cl_priya", serviceId: "svc_disc", day: "2026-06-09", start: "13:00", end: "13:30", confirmed: true, depositPaid: true, intakeDone: false, score: 61, location: "Zoom", prep: "First call. Intake not completed, confirm goals live. Inbound from LinkedIn, exploring a pivot into product management." },
+  { id: "ses_3", clientId: "cl_marcus", serviceId: "svc_intensive", day: "2026-06-09", start: "15:30", end: "17:00", confirmed: true, depositPaid: true, intakeDone: true, score: 88, location: "Zoom", prep: "Board update narrative round 2. Bring the one-pager template. Package renews Jun 30, flag near end." },
   { id: "ses_4", clientId: "cl_john", serviceId: "svc_1on1", day: "2026-06-10", start: "09:00", end: "10:00", confirmed: false, depositPaid: false, intakeDone: false, score: 42, location: "Zoom", prep: "High no-show risk: no deposit, intake incomplete, 2 prior cancellations. Engine recommends requiring deposit + confirmation before this runs." },
   { id: "ses_5", clientId: "cl_marcus", serviceId: "svc_1on1", day: "2026-06-11", start: "11:00", end: "12:00", confirmed: true, depositPaid: true, intakeDone: true, score: 90, location: "Zoom", prep: "Package session 3 of 4. Continue fundraising prep." },
   { id: "ses_6", clientId: "cl_sarah", serviceId: "svc_1on1", day: "2026-06-12", start: "10:30", end: "11:30", confirmed: true, depositPaid: true, intakeDone: true, score: 95, location: "Zoom", prep: "Follow-through on salary ask. Debrief the real conversation if it happened." },
@@ -115,7 +115,7 @@ export const FOLLOWUPS: FollowUp[] = [
 ];
 
 export const NEEDS_ATTENTION: AttentionItem[] = [
-  { id: "na_1", icon: "risk", title: "John Davies — tomorrow 9:00 AM is high-risk", why: ["No deposit on file", "Intake incomplete", "2 prior cancellations, 1 no-show"], actions: ["Require deposit", "Request confirmation"] },
+  { id: "na_1", icon: "risk", title: "John Davies, tomorrow 9:00 AM is high-risk", why: ["No deposit on file", "Intake incomplete", "2 prior cancellations, 1 no-show"], actions: ["Require deposit", "Request confirmation"] },
   { id: "na_2", icon: "money", title: "David Thompson invoice is 6 days overdue", why: ["$180 unpaid since Jun 3", "Reliable payer, just slow"], actions: ["Send gentle reminder"] },
   { id: "na_3", icon: "slot", title: "Open slot tomorrow 2:00 PM", why: ["Cancellation opened a 60-min gap", "2 waitlist clients fit this service"], actions: ["Offer to waitlist"] },
   { id: "na_4", icon: "intake", title: "Priya Sharma intake not completed", why: ["Discovery call today at 1:00 PM", "Form sent Jun 6, not opened"], actions: ["Resend intake"] },
@@ -123,7 +123,7 @@ export const NEEDS_ATTENTION: AttentionItem[] = [
 
 export const OUTSTANDING: OutstandingPayment[] = [
   { client: "David Thompson", what: "1:1 Coaching", amt: 180, status: "Overdue", age: "6 days" },
-  { client: "John Davies", what: "Deposit — tomorrow", amt: 50, status: "Unpaid", age: "Due before session" },
+  { client: "John Davies", what: "Deposit, tomorrow", amt: 50, status: "Unpaid", age: "Due before session" },
 ];
 
 export const DEPOSITS_HELD = [
@@ -141,7 +141,7 @@ export const REVENUE_WEEKS = [1280, 1640, 1420, 1980, 2140, 2380];
 export const WEEK_LABELS = ["May 5", "May 12", "May 19", "May 26", "Jun 2", "Jun 9"];
 
 /* ------------------------------------------------------------------ */
-/* Accessors — the seam where Supabase queries will eventually live.   */
+/* Accessors, the seam where Supabase queries will eventually live.   */
 /* ------------------------------------------------------------------ */
 
 export function getHost(): Host {

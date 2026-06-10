@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Avatar, Btn, Card, Pill, SectionTitle, Segmented, Toggle, cx } from "@/components/ui";
+import { useRef, useState } from "react";
+import { Btn, Card, Pill, SectionTitle, Segmented, Toggle, cx } from "@/components/ui";
 import { Icon } from "@/components/icons";
+import { PageIntro } from "@/components/page-intro";
+import { useToast } from "@/components/toast";
+import { HostAvatar, useProfile, readImageScaled } from "@/components/profile";
 import { HOST } from "@/lib/mock-data";
 
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
@@ -23,6 +26,21 @@ function Row({ label, desc, children }: { label: string; desc?: string; children
 }
 
 export default function SettingsPage() {
+  const toast = useToast();
+  const { photo, setPhoto } = useProfile();
+  const fileRef = useRef<HTMLInputElement>(null);
+  async function onPickPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    try {
+      setPhoto(await readImageScaled(f));
+      toast("Profile photo updated");
+    } catch {
+      toast("Could not load that image");
+    }
+  }
+
   const [theme, setTheme] = useState("calm");
   const [font, setFont] = useState("default");
   const [layout, setLayout] = useState("focus");
@@ -32,6 +50,7 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6 max-w-[760px]">
+      <PageIntro id="settings" tag="Settings" title="Make it yours" body="Your booking profile, appearance, calendar health, notifications, and payment defaults. Set these once and get back to work." />
       <div>
         <h1 className="text-xl font-semibold tracking-tight">Settings</h1>
         <p className="text-sm text-muted">Appearance, calendar health, notifications, payments &amp; privacy.</p>
@@ -39,9 +58,18 @@ export default function SettingsPage() {
 
       <Group title="Profile">
         <div className="flex items-center gap-3.5">
-          <Avatar initials={HOST.initials} size={52} />
-          <div className="flex-1"><div className="font-medium">{HOST.firstName} {HOST.lastName}</div><div className="text-[13px] text-muted">{HOST.role} · sessionly.com/{HOST.slug}</div></div>
-          <Btn size="sm" variant="secondary">Edit</Btn>
+          <button onClick={() => fileRef.current?.click()} className="relative group rounded-[17px] overflow-hidden shrink-0" title="Change photo" style={{ width: 52, height: 52 }}>
+            <HostAvatar size={52} />
+            <span className="absolute inset-0 bg-black/0 group-hover:bg-black/35 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <Icon.pencil className="w-4 h-4" />
+            </span>
+          </button>
+          <div className="flex-1 min-w-0"><div className="font-medium">{HOST.firstName} {HOST.lastName}</div><div className="text-[13px] text-muted">{HOST.role} · sessionly.com/{HOST.slug}</div></div>
+          <div className="flex gap-2 shrink-0">
+            {photo && <Btn size="sm" variant="secondary" onClick={() => { setPhoto(null); toast("Photo removed"); }}>Remove</Btn>}
+            <Btn size="sm" variant="secondary" onClick={() => fileRef.current?.click()}>{photo ? "Change photo" : "Add photo"}</Btn>
+          </div>
+          <input ref={fileRef} type="file" accept="image/*" onChange={onPickPhoto} className="hidden" />
         </div>
       </Group>
 
@@ -71,13 +99,13 @@ export default function SettingsPage() {
             </div>
           ))}
           <div className="mt-2 p-3 rounded-[10px] bg-goodSoft border border-[#C9EBD4] flex items-center gap-2.5">
-            <Icon.check className="w-4 h-4 text-good" /><span className="text-[13px] text-good font-medium">Safe to share — no conflicts detected, permissions OK.</span>
+            <Icon.check className="w-4 h-4 text-good" /><span className="text-[13px] text-good font-medium">Safe to share. No conflicts detected, permissions OK.</span>
           </div>
         </div>
       </Group>
 
       <Group title="Notifications">
-        {([["sms", "SMS reminders", "Sent to clients before sessions"], ["email", "Email confirmations", ""], ["push", "Push notifications", "Browser & mobile"], ["autoReminder", "Auto follow-up reminders", ""]] as const).map(([k, n, d]) => (
+        {([["sms", "SMS reminders", "Sent to clients before sessions"], ["email", "Email confirmations", ""], ["push", "Push notifications", "In your browser"], ["autoReminder", "Auto follow-up reminders", ""]] as const).map(([k, n, d]) => (
           <Row key={k} label={n} desc={d}><Toggle on={t[k]} onClick={() => tog(k)} /></Row>
         ))}
       </Group>

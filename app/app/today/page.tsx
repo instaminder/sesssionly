@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Avatar, Btn, Card, Pill, ScoreRing, SectionTitle, cx } from "@/components/ui";
+import { HostAvatar } from "@/components/profile";
 import { Icon, type IconName } from "@/components/icons";
 import { useOverlays } from "@/components/overlays";
 import { useToast } from "@/components/toast";
@@ -60,7 +61,7 @@ export default function TodayPage() {
       {/* Greeting + quick actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <Avatar initials={HOST.initials} size={48} />
+          <HostAvatar size={48} />
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Hi, {HOST.firstName}</h1>
             <p className="text-sm text-muted">Tuesday, June 9 · 3 sessions today · 92% attendance this month</p>

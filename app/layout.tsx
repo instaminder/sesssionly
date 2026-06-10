@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sessionly — Client Operations Layer",
+  title: "Sessionly · Client Operations Layer",
   description: "Everything that happens before, during, and after an appointment.",
 };
 

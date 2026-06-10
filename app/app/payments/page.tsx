@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Btn, Card, Pill, SectionTitle, cx } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { useToast } from "@/components/toast";
+import { PageIntro } from "@/components/page-intro";
 import { OUTSTANDING, DEPOSITS_HELD, RECENT_PAID, REVENUE_WEEKS, WEEK_LABELS } from "@/lib/mock-data";
 
 interface ReminderDraft {
@@ -51,6 +52,7 @@ export default function PaymentsPage() {
 
   return (
     <div className="space-y-5">
+      <PageIntro id="payments" tag="Payments" title="Get paid, and watch the trend" body="Outstanding balances, deposits you are holding, what has been paid, and how your revenue is moving week to week. You can draft a reminder in a tap." />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">Payments</h1>

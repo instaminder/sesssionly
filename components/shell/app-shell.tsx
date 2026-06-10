@@ -3,11 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Avatar, Btn, cx } from "../ui";
+import { Btn, cx } from "../ui";
 import { Icon, type IconName } from "../icons";
 import { OverlayProvider, useOverlays } from "../overlays";
 import { ToastProvider } from "../toast";
 import { GuideProvider, useGuide } from "../guide";
+import { ProfileProvider, HostAvatar } from "../profile";
 import { HOST } from "@/lib/mock-data";
 
 const NAV: { key: string; label: string; href: string; icon: IconName }[] = [
@@ -23,13 +24,15 @@ const MOBILE = ["today", "clients", "calendar", "payments", "more"];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <ToastProvider>
-      <OverlayProvider>
-        <GuideProvider>
-          <Shell>{children}</Shell>
-        </GuideProvider>
-      </OverlayProvider>
-    </ToastProvider>
+    <ProfileProvider>
+      <ToastProvider>
+        <OverlayProvider>
+          <GuideProvider>
+            <Shell>{children}</Shell>
+          </GuideProvider>
+        </OverlayProvider>
+      </ToastProvider>
+    </ProfileProvider>
   );
 }
 
@@ -68,7 +71,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         </nav>
         <div className="p-3 border-t border-line">
           <Link href="/app/settings" className="w-full flex items-center gap-2.5 px-2 py-2 rounded-[10px] hover:bg-[#F5F5F2]">
-            <Avatar initials={HOST.initials} size={32} />
+            <HostAvatar size={32} />
             <div className="text-left leading-tight">
               <div className="text-sm font-medium">{HOST.firstName} {HOST.lastName}</div>
               <div className="text-[11px] text-faint">{HOST.business}</div>
@@ -91,7 +94,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-bad" />
               </button>
               <span className="hidden sm:inline-flex"><Btn size="sm" onClick={() => openInvite()}><Icon.invite className="w-4 h-4" />Smart Invite</Btn></span>
-              <Link href="/app/settings" className="lg:hidden"><Avatar initials={HOST.initials} size={32} /></Link>
+              <Link href="/app/settings" className="lg:hidden"><HostAvatar size={32} /></Link>
             </div>
           </div>
         </header>
