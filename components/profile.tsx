@@ -4,6 +4,7 @@ import * as React from "react";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Avatar, cx } from "./ui";
 import { HOST } from "@/lib/mock-data";
+import { supabaseConfigured } from "@/lib/supabase/client";
 
 /**
  * Host profile photo. Stored as a small data URL on the device (localStorage)
@@ -108,18 +109,30 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
 /** The host's avatar: their uploaded photo, or their initials as a fallback. */
 export function HostAvatar({ size = 36, ring = false }: { size?: number; ring?: boolean }) {
-  const { photo } = useProfile();
+  const { photo, host } = useProfile();
   if (photo) {
     return (
       <img
         src={photo}
-        alt={`${HOST.firstName} ${HOST.lastName}`}
+        alt={`${host.firstName} ${host.lastName}`}
         className={cx("object-cover shrink-0", ring && "ring-2 ring-white shadow-sm")}
         style={{ width: size, height: size, borderRadius: size / 3 }}
       />
     );
   }
-  return <Avatar initials={HOST.initials} color="#3E5C76" size={size} ring={ring} />;
+  // Demo mode (no account): a neutral placeholder, not a specific person's initials.
+  if (!supabaseConfigured) {
+    return (
+      <div className={cx("shrink-0 flex items-center justify-center bg-[#E2E2DE] text-[#9A9A9F]", ring && "ring-2 ring-white shadow-sm")} style={{ width: size, height: size, borderRadius: size / 3 }}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" style={{ width: size * 0.55, height: size * 0.55 }}>
+          <circle cx="12" cy="8.5" r="3.3" />
+          <path d="M5 20a7 7 0 0 1 14 0" />
+        </svg>
+      </div>
+    );
+  }
+  const initials = ((host.firstName[0] ?? "") + (host.lastName[0] ?? "")).toUpperCase() || "?";
+  return <Avatar initials={initials} color="#3E5C76" size={size} ring={ring} />;
 }
 
 /**

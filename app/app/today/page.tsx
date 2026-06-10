@@ -95,9 +95,9 @@ export default function TodayPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* AI Daily Briefing */}
           <Card className="!p-0 overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-line flex items-center justify-between gap-2">
+            <div className="px-5 py-3.5 border-b border-line flex items-center justify-between gap-2 flex-wrap">
               <span className="font-semibold text-sm">Daily Briefing</span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Pill tone="info">Draft · you approve</Pill>
                 <Btn size="sm" variant="secondary" onClick={generateBriefing}>
                   <Icon.refresh className="w-4 h-4" />{bLoading ? "Updating…" : brief ? "Refresh" : "Update"}

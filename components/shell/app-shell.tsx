@@ -94,6 +94,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-bad" />
               </button>
               <span className="hidden sm:inline-flex"><Btn size="sm" onClick={() => openInvite()}><Icon.invite className="w-4 h-4" />Smart Invite</Btn></span>
+              <button onClick={() => openInvite()} aria-label="Smart Invite" className="sm:hidden w-9 h-9 rounded-[10px] bg-ink text-white flex items-center justify-center"><Icon.invite className="w-[18px] h-[18px]" /></button>
               <Link href="/app/settings" className="lg:hidden"><HostAvatar size={32} /></Link>
             </div>
           </div>
@@ -118,9 +119,6 @@ function Shell({ children }: { children: React.ReactNode }) {
         </div>
       </nav>
 
-      <button onClick={() => openInvite()} className="sm:hidden fixed right-4 bottom-20 z-30 w-14 h-14 rounded-full bg-ink text-white shadow-lg flex items-center justify-center">
-        <Icon.invite className="w-6 h-6" />
-      </button>
     </div>
   );
 }
