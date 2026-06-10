@@ -92,7 +92,7 @@ export default function TodayPage() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-6 min-w-0">
           {/* AI Daily Briefing */}
           <Card className="!p-0 overflow-hidden">
             <div className="px-5 py-3.5 border-b border-line flex items-center justify-between gap-2 flex-wrap">
@@ -156,7 +156,7 @@ export default function TodayPage() {
         </div>
 
         {/* Right rail */}
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0">
           <div>
             <SectionTitle info="Things worth handling today: at-risk sessions, overdue invoices, open slots, and missing intakes. Each one explains why.">Needs attention</SectionTitle>
             <div className="space-y-2">

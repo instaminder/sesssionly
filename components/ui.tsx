@@ -84,12 +84,12 @@ export function InfoDot({ text }: { text: string }) {
 
 export function SectionTitle({ children, action, info }: { children: React.ReactNode; action?: React.ReactNode; info?: string }) {
   return (
-    <div className="flex items-center justify-between mb-3">
-      <h3 className="text-[13px] font-semibold uppercase tracking-wide text-faint flex items-center gap-1.5">
-        {children}
+    <div className="flex items-center justify-between gap-2 mb-3">
+      <h3 className="min-w-0 text-[13px] font-semibold uppercase tracking-wide text-faint flex items-center gap-1.5">
+        <span className="truncate">{children}</span>
         {info && <InfoDot text={info} />}
       </h3>
-      {action}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }
