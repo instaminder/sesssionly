@@ -99,7 +99,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="flex-1 px-4 sm:px-6 py-5 sm:py-6 pb-24 lg:pb-10 max-w-app w-full mx-auto">{children}</main>
+        <main className="flex-1 px-4 sm:px-6 py-5 sm:py-6 pb-24 lg:pb-10 max-w-app w-full mx-auto overflow-x-hidden">{children}</main>
       </div>
 
       {/* Mobile bottom nav */}

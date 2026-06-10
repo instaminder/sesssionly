@@ -69,7 +69,7 @@ export default function TodayPage() {
             <p className="text-sm text-muted">{supabaseConfigured ? "Tuesday, June 9 · 3 sessions today · 92% attendance this month" : "Here's what running your day on Sessionly looks like. Tap around."}</p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Link href="/app/services"><Btn variant="secondary"><Icon.plus className="w-4 h-4" />Create Service</Btn></Link>
           <Btn onClick={() => openInvite()}><Icon.invite className="w-4 h-4" />Send Smart Invite</Btn>
         </div>
@@ -126,7 +126,7 @@ export default function TodayPage() {
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold">{next.client.name}</div>
                       <div className="text-[13px] text-muted">{next.service.name} · 60 min · {next.location}</div>
-                      <div className="flex gap-1.5 mt-1.5"><Pill tone="good"><Icon.check className="w-3 h-3" />Confirmed</Pill><Pill tone="good">Deposit paid</Pill><Pill tone="good">Intake done</Pill></div>
+                      <div className="flex gap-1.5 mt-1.5 flex-wrap"><Pill tone="good"><Icon.check className="w-3 h-3" />Confirmed</Pill><Pill tone="good">Deposit paid</Pill><Pill tone="good">Intake done</Pill></div>
                     </div>
                     <div className="flex flex-col items-center gap-1"><ScoreRing score={next.score} size={48} /><span className="text-[10px] text-faint font-medium">Session Score</span></div>
                   </div>
