@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Avatar, Btn, Card, Pill, ScoreRing, SectionTitle, cx } from "@/components/ui";
 import { HostAvatar, useProfile } from "@/components/profile";
+import { supabaseConfigured } from "@/lib/supabase/client";
 import { Icon, type IconName } from "@/components/icons";
 import { useOverlays } from "@/components/overlays";
 import { useToast } from "@/components/toast";
@@ -64,8 +65,8 @@ export default function TodayPage() {
         <div className="flex items-center gap-3.5">
           <HostAvatar size={48} />
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Hi, {host.firstName}</h1>
-            <p className="text-sm text-muted">Tuesday, June 9 · 3 sessions today · 92% attendance this month</p>
+            <h1 className="text-2xl font-semibold tracking-tight">{supabaseConfigured ? `Hi, ${host.firstName}` : "Let's run a great day"}</h1>
+            <p className="text-sm text-muted">{supabaseConfigured ? "Tuesday, June 9 · 3 sessions today · 92% attendance this month" : "Here's what running your day on Sessionly looks like. Tap around."}</p>
           </div>
         </div>
         <div className="flex gap-2">
