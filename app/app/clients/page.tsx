@@ -79,7 +79,7 @@ export default function ClientsPage() {
       ) : filtered.length === 0 ? (
         <div className="text-center text-[13px] text-faint py-10 border border-dashed border-line rounded-[12px]">{clients.length === 0 ? "No clients yet. Add your first one." : "No clients match your search."}</div>
       ) : (
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {filtered.map((c) => (
           <button key={c.id} onClick={() => openClient(c)} className="text-left">
             <Card className="!p-4 hover:border-[#d8d8d2] h-full">

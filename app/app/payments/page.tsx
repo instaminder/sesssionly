@@ -70,7 +70,7 @@ export default function PaymentsPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <Card className="lg:col-span-2">
           <SectionTitle>Revenue trend · weekly</SectionTitle>
           <div className="flex items-end gap-2 h-40 mt-2">
@@ -99,7 +99,7 @@ export default function PaymentsPage() {
       {drafts && (
         <div>
           <SectionTitle action={<button onClick={() => setDrafts(null)} className="text-[13px] text-accent font-medium">Dismiss</button>}>Drafted reminders · you approve</SectionTitle>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {drafts.map((d, i) => (
               <Card key={i} className="!p-3.5">
                 <div className="flex items-center gap-2 mb-2">
@@ -120,7 +120,7 @@ export default function PaymentsPage() {
         </div>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <SectionTitle>Deposits held</SectionTitle>
           <Card className="!p-0 divide-y divide-line">

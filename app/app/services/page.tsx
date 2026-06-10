@@ -107,7 +107,7 @@ export default function ServicesPage() {
         </Card>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {services.map((s) => (
           <Card key={s.id} className="!p-0 overflow-hidden">
             <button onClick={() => setOpen(open === s.id ? null : s.id)} className="w-full text-left">

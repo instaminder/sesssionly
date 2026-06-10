@@ -167,7 +167,7 @@ export default function SettingsPage() {
 
       <Group title="Dashboard layout">
         <p className="text-[13px] text-muted">Choose how Today is arranged.</p>
-        <div className="grid sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {[["focus", "Focus Day", "Sessions first"], ["revenue", "Revenue First", "Payments first"], ["care", "Client Care", "Follow-ups first"]].map(([v, n, d]) => (
             <button key={v} onClick={() => setLayout(v)} className={cx("text-left p-3 rounded-[10px] border", layout === v ? "border-accent bg-accentSoft" : "border-line hover:bg-[#FAFAF8]")}>
               <div className="text-[13px] font-medium">{n}</div><div className="text-[11px] text-muted">{d}</div>

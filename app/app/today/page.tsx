@@ -91,7 +91,7 @@ export default function TodayPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6 min-w-0">
           {/* AI Daily Briefing */}
           <Card className="!p-0 overflow-hidden">

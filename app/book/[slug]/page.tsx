@@ -95,7 +95,7 @@ export default function BookPage() {
           {step === "landing" && (
             <>
               <h2 className="text-lg font-semibold mb-3">Choose a service</h2>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {services.map((s) => (
                   <button key={s.id} onClick={() => pickService(s)} className="text-left">
                     <div className="bg-surface border border-line rounded-xl2 p-4 hover:border-[#cfcfca] h-full flex flex-col">
