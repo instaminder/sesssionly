@@ -6,7 +6,6 @@ import { Icon } from "@/components/icons";
 import { PageIntro } from "@/components/page-intro";
 import { useToast } from "@/components/toast";
 import { HostAvatar, useProfile, readImageScaled } from "@/components/profile";
-import { HOST } from "@/lib/mock-data";
 
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -27,8 +26,10 @@ function Row({ label, desc, children }: { label: string; desc?: string; children
 
 export default function SettingsPage() {
   const toast = useToast();
-  const { photo, setPhoto } = useProfile();
+  const { photo, setPhoto, host, setHost } = useProfile();
   const fileRef = useRef<HTMLInputElement>(null);
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [pf, setPf] = useState(host);
   async function onPickPhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     e.target.value = "";
@@ -64,18 +65,44 @@ export default function SettingsPage() {
               <Icon.pencil className="w-4 h-4" />
             </span>
           </button>
-          <div className="flex-1 min-w-0"><div className="font-medium">{HOST.firstName} {HOST.lastName}</div><div className="text-[13px] text-muted">{HOST.role} · sessionly.com/{HOST.slug}</div></div>
+          <div className="flex-1 min-w-0">
+            <div className="font-medium truncate">{host.firstName} {host.lastName}</div>
+            <div className="text-[13px] text-muted truncate">{host.business || "Your business"} · sessionly.com/{host.slug}</div>
+            {host.address && <div className="text-[12px] text-faint truncate">{host.address}</div>}
+          </div>
           <div className="flex gap-2 shrink-0">
             {photo && <Btn size="sm" variant="secondary" onClick={() => { setPhoto(null); toast("Photo removed"); }}>Remove</Btn>}
-            <Btn size="sm" variant="secondary" onClick={() => fileRef.current?.click()}>{photo ? "Change photo" : "Add photo"}</Btn>
+            <Btn size="sm" variant="secondary" onClick={() => fileRef.current?.click()}>{photo ? "Photo" : "Add photo"}</Btn>
+            <Btn size="sm" variant="secondary" onClick={() => { setPf(host); setEditingProfile((v) => !v); }}>{editingProfile ? "Close" : "Edit"}</Btn>
           </div>
           <input ref={fileRef} type="file" accept="image/*" onChange={onPickPhoto} className="hidden" />
         </div>
+
+        {editingProfile && (
+          <div className="space-y-3 pt-3 border-t border-line">
+            <div className="grid grid-cols-2 gap-2">
+              <input value={pf.firstName} onChange={(e) => setPf({ ...pf, firstName: e.target.value })} placeholder="First name" className="inp !text-[13px]" />
+              <input value={pf.lastName} onChange={(e) => setPf({ ...pf, lastName: e.target.value })} placeholder="Last name" className="inp !text-[13px]" />
+            </div>
+            <input value={pf.business} onChange={(e) => setPf({ ...pf, business: e.target.value })} placeholder="Business name" className="inp !text-[13px]" />
+            <input value={pf.role} onChange={(e) => setPf({ ...pf, role: e.target.value })} placeholder="What you do (e.g. Leadership Coach)" className="inp !text-[13px]" />
+            <div className="grid grid-cols-2 gap-2">
+              <input value={pf.email} onChange={(e) => setPf({ ...pf, email: e.target.value })} placeholder="Email" className="inp !text-[13px]" />
+              <input value={pf.phone} onChange={(e) => setPf({ ...pf, phone: e.target.value })} placeholder="Phone" className="inp !text-[13px]" />
+            </div>
+            <input value={pf.address} onChange={(e) => setPf({ ...pf, address: e.target.value })} placeholder="Business address (used for travel & directions)" className="inp !text-[13px]" />
+            <div className="flex items-center gap-1 text-[13px]">
+              <span className="text-muted shrink-0">sessionly.com/</span>
+              <input value={pf.slug} onChange={(e) => setPf({ ...pf, slug: e.target.value.replace(/[^a-z0-9-]/gi, "").toLowerCase() })} placeholder="you" className="inp !text-[13px]" />
+            </div>
+            <div className="flex justify-end gap-2"><Btn size="sm" variant="secondary" onClick={() => setEditingProfile(false)}>Cancel</Btn><Btn size="sm" onClick={() => { setHost(pf); setEditingProfile(false); toast("Profile saved"); }}>Save</Btn></div>
+          </div>
+        )}
       </Group>
 
       <Group title="Style Studio">
-        <Row label="Theme" desc="Calm Professional is the default look."><Segmented size="sm" value={theme} onChange={setTheme} options={[{ value: "calm", label: "Calm" }, { value: "light", label: "Light" }, { value: "mono", label: "Mono" }]} /></Row>
-        <Row label="Font size" desc="Affects density across the app."><Segmented size="sm" value={font} onChange={setFont} options={[{ value: "compact", label: "S" }, { value: "default", label: "M" }, { value: "large", label: "L" }]} /></Row>
+        <Row label="Theme" desc="Coming soon"><Segmented size="sm" value={theme} onChange={(v) => { setTheme(v); toast("Themes are coming soon"); }} options={[{ value: "calm", label: "Calm" }, { value: "light", label: "Light" }, { value: "mono", label: "Mono" }]} /></Row>
+        <Row label="Font size" desc="Coming soon"><Segmented size="sm" value={font} onChange={(v) => { setFont(v); toast("Font sizing is coming soon"); }} options={[{ value: "compact", label: "S" }, { value: "default", label: "M" }, { value: "large", label: "L" }]} /></Row>
       </Group>
 
       <Group title="Dashboard layout">
@@ -95,7 +122,7 @@ export default function SettingsPage() {
             <div key={n} className="flex items-center gap-3">
               <span className={cx("w-2 h-2 rounded-full", tone === "good" ? "bg-good" : "bg-[#C9C9C4]")} />
               <div className="flex-1"><div className="text-[13px] font-medium">{n}</div><div className="text-[12px] text-muted">{s}</div></div>
-              <Btn size="sm" variant="secondary">{tone === "good" ? "Manage" : "Connect"}</Btn>
+              <Btn size="sm" variant="secondary" onClick={() => toast("Calendar sync is coming soon")}>{tone === "good" ? "Manage" : "Connect"}</Btn>
             </div>
           ))}
           <div className="mt-2 p-3 rounded-[10px] bg-goodSoft border border-[#C9EBD4] flex items-center gap-2.5">
@@ -118,7 +145,7 @@ export default function SettingsPage() {
       <Group title="Privacy & accessibility">
         <Row label="Reduce motion"><Toggle on={t.reduceMotion} onClick={() => tog("reduceMotion")} /></Row>
         <Row label="Session Score visibility" desc="Host-only for now. Clients never see scores."><Pill tone="info">Host-only</Pill></Row>
-        <Row label="Export my data"><Btn size="sm" variant="secondary">Request export</Btn></Row>
+        <Row label="Export my data"><Btn size="sm" variant="secondary" onClick={() => toast("Data export is coming soon")}>Request export</Btn></Row>
       </Group>
     </div>
   );

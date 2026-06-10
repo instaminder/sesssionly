@@ -8,8 +8,7 @@ import { Icon, type IconName } from "../icons";
 import { OverlayProvider, useOverlays } from "../overlays";
 import { ToastProvider } from "../toast";
 import { GuideProvider, useGuide } from "../guide";
-import { ProfileProvider, HostAvatar } from "../profile";
-import { HOST } from "@/lib/mock-data";
+import { ProfileProvider, HostAvatar, useProfile } from "../profile";
 
 const NAV: { key: string; label: string; href: string; icon: IconName }[] = [
   { key: "today", label: "Today", href: "/app/today", icon: "today" },
@@ -51,6 +50,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { openInvite } = useOverlays();
   const openGuide = useGuide();
+  const { host } = useProfile();
   const active = (href: string) => pathname?.startsWith(href);
   const current = NAV.find((n) => active(n.href));
 
@@ -73,8 +73,8 @@ function Shell({ children }: { children: React.ReactNode }) {
           <Link href="/app/settings" className="w-full flex items-center gap-2.5 px-2 py-2 rounded-[10px] hover:bg-[#F5F5F2]">
             <HostAvatar size={32} />
             <div className="text-left leading-tight">
-              <div className="text-sm font-medium">{HOST.firstName} {HOST.lastName}</div>
-              <div className="text-[11px] text-faint">{HOST.business}</div>
+              <div className="text-sm font-medium">{host.firstName} {host.lastName}</div>
+              <div className="text-[11px] text-faint">{host.business}</div>
             </div>
           </Link>
         </div>

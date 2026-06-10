@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Avatar, Btn, Card, Pill, ScoreRing, SectionTitle, cx } from "@/components/ui";
-import { HostAvatar } from "@/components/profile";
+import { HostAvatar, useProfile } from "@/components/profile";
 import { Icon, type IconName } from "@/components/icons";
 import { useOverlays } from "@/components/overlays";
 import { useToast } from "@/components/toast";
-import { HOST, getSessionsForDay, getSessions, getClient, NEEDS_ATTENTION, OUTSTANDING, FOLLOWUPS, TODAY } from "@/lib/mock-data";
+import { getSessionsForDay, getSessions, getClient, NEEDS_ATTENTION, OUTSTANDING, FOLLOWUPS, TODAY } from "@/lib/mock-data";
 import { fmtDay, to12 } from "@/lib/format";
 
 const attnIcon: Record<string, IconName> = { risk: "risk", money: "payments", slot: "calendar", intake: "services" };
@@ -30,6 +30,7 @@ const DEFAULT_ACTIONS = ["Resend Priya's intake", "Protect John's session", "Sen
 export default function TodayPage() {
   const { openInvite, openSession } = useOverlays();
   const toast = useToast();
+  const { host } = useProfile();
   const today = getSessionsForDay(TODAY);
   const next = today[0];
   const upcoming = getSessions().filter((s) => s.day > TODAY);
@@ -63,7 +64,7 @@ export default function TodayPage() {
         <div className="flex items-center gap-3.5">
           <HostAvatar size={48} />
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Hi, {HOST.firstName}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Hi, {host.firstName}</h1>
             <p className="text-sm text-muted">Tuesday, June 9 · 3 sessions today · 92% attendance this month</p>
           </div>
         </div>

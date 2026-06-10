@@ -10,12 +10,37 @@ import { HOST } from "@/lib/mock-data";
  * until the real backend lands, then it moves to Supabase storage. HostAvatar
  * shows the photo everywhere it represents the host, falling back to initials.
  */
+export interface HostInfo {
+  firstName: string;
+  lastName: string;
+  business: string;
+  role: string;
+  email: string;
+  phone: string;
+  address: string;
+  slug: string;
+}
+
+const DEFAULT_HOST: HostInfo = {
+  firstName: HOST.firstName,
+  lastName: HOST.lastName,
+  business: HOST.business,
+  role: HOST.role,
+  email: "",
+  phone: "",
+  address: "",
+  slug: HOST.slug,
+};
+
 interface ProfileCtx {
   photo: string | null;
   setPhoto: (p: string | null) => void;
+  host: HostInfo;
+  setHost: (h: HostInfo) => void;
 }
-const Ctx = createContext<ProfileCtx>({ photo: null, setPhoto: () => {} });
+const Ctx = createContext<ProfileCtx>({ photo: null, setPhoto: () => {}, host: DEFAULT_HOST, setHost: () => {} });
 const KEY = "sessionly_avatar";
+const HOST_KEY = "sessionly_host";
 
 export function useProfile(): ProfileCtx {
   return useContext(Ctx);
@@ -23,11 +48,14 @@ export function useProfile(): ProfileCtx {
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [photo, setPhotoState] = useState<string | null>(null);
+  const [host, setHostState] = useState<HostInfo>(DEFAULT_HOST);
 
   useEffect(() => {
     try {
       const v = localStorage.getItem(KEY);
       if (v) setPhotoState(v);
+      const h = localStorage.getItem(HOST_KEY);
+      if (h) setHostState({ ...DEFAULT_HOST, ...JSON.parse(h) });
     } catch {
       /* ignore */
     }
@@ -43,7 +71,16 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  return <Ctx.Provider value={{ photo, setPhoto }}>{children}</Ctx.Provider>;
+  const setHost = useCallback((h: HostInfo) => {
+    setHostState(h);
+    try {
+      localStorage.setItem(HOST_KEY, JSON.stringify(h));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  return <Ctx.Provider value={{ photo, setPhoto, host, setHost }}>{children}</Ctx.Provider>;
 }
 
 /** The host's avatar: their uploaded photo, or their initials as a fallback. */
