@@ -72,9 +72,9 @@ function Shell({ children }: { children: React.ReactNode }) {
         <div className="p-3 border-t border-line">
           <Link href="/app/settings" className="w-full flex items-center gap-2.5 px-2 py-2 rounded-[10px] hover:bg-[#F5F5F2]">
             <HostAvatar size={32} />
-            <div className="text-left leading-tight">
-              <div className="text-sm font-medium">{host.firstName} {host.lastName}</div>
-              <div className="text-[11px] text-faint">{host.business}</div>
+            <div className="text-left leading-tight min-w-0">
+              <div className="text-sm font-medium truncate">{host.firstName || host.lastName ? `${host.firstName} ${host.lastName}`.trim() : "Add your name"}</div>
+              <div className="text-[11px] text-faint truncate">{host.business || "Tap to personalize"}</div>
             </div>
           </Link>
         </div>

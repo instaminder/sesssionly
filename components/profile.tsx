@@ -33,6 +33,13 @@ const DEFAULT_HOST: HostInfo = {
   slug: HOST.slug,
 };
 
+// In demo mode we start with a neutral, un-personalized identity so the app
+// feels like the visitor's own. The moment they add a name in Settings, the
+// avatar, sidebar, and Today greeting personalize to them.
+const DEMO_HOST: HostInfo = { firstName: "", lastName: "", business: "", role: "", email: "", phone: "", address: "", slug: HOST.slug };
+
+const INITIAL_HOST: HostInfo = supabaseConfigured ? DEFAULT_HOST : DEMO_HOST;
+
 export interface BookingPage {
   coverPhoto: string | null;
   videoUrl: string;
@@ -60,7 +67,7 @@ export function useProfile(): ProfileCtx {
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [photo, setPhotoState] = useState<string | null>(null);
-  const [host, setHostState] = useState<HostInfo>(DEFAULT_HOST);
+  const [host, setHostState] = useState<HostInfo>(INITIAL_HOST);
   const [bookingPage, setBookingPageState] = useState<BookingPage>(DEFAULT_BOOKING);
 
   useEffect(() => {
@@ -68,7 +75,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
       const v = localStorage.getItem(KEY);
       if (v) setPhotoState(v);
       const h = localStorage.getItem(HOST_KEY);
-      if (h) setHostState({ ...DEFAULT_HOST, ...JSON.parse(h) });
+      if (h) setHostState({ ...INITIAL_HOST, ...JSON.parse(h) });
       const b = localStorage.getItem(BOOKING_KEY);
       if (b) setBookingPageState({ ...DEFAULT_BOOKING, ...JSON.parse(b) });
     } catch {
@@ -120,8 +127,10 @@ export function HostAvatar({ size = 36, ring = false }: { size?: number; ring?: 
       />
     );
   }
-  // Demo mode (no account): a neutral placeholder, not a specific person's initials.
-  if (!supabaseConfigured) {
+  const initials = ((host.firstName[0] ?? "") + (host.lastName[0] ?? "")).toUpperCase();
+  // No name yet (a demo visitor who hasn't personalized): neutral person icon,
+  // not a specific person's initials. Once they add their name it becomes theirs.
+  if (!initials) {
     return (
       <div className={cx("shrink-0 flex items-center justify-center bg-[#E2E2DE] text-[#9A9A9F]", ring && "ring-2 ring-white shadow-sm")} style={{ width: size, height: size, borderRadius: size / 3 }}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" style={{ width: size * 0.55, height: size * 0.55 }}>
@@ -131,7 +140,6 @@ export function HostAvatar({ size = 36, ring = false }: { size?: number; ring?: 
       </div>
     );
   }
-  const initials = ((host.firstName[0] ?? "") + (host.lastName[0] ?? "")).toUpperCase() || "?";
   return <Avatar initials={initials} color="#3E5C76" size={size} ring={ring} />;
 }
 

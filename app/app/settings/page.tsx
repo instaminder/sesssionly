@@ -89,7 +89,7 @@ export default function SettingsPage() {
             </span>
           </button>
           <div className="flex-1 min-w-0">
-            <div className="font-medium truncate">{host.firstName} {host.lastName}</div>
+            <div className="font-medium truncate">{host.firstName || host.lastName ? `${host.firstName} ${host.lastName}`.trim() : "Add your name"}</div>
             <div className="text-[13px] text-muted truncate">{host.business || "Your business"} · sessionly.com/{host.slug}</div>
             {host.address && <div className="text-[12px] text-faint truncate">{host.address}</div>}
           </div>

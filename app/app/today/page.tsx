@@ -64,9 +64,9 @@ export default function TodayPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <HostAvatar size={48} />
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">{supabaseConfigured ? `Hi, ${host.firstName}` : "Let's run a great day"}</h1>
-            <p className="text-sm text-muted">{supabaseConfigured ? "Tuesday, June 9 · 3 sessions today · 92% attendance this month" : "Here's what running your day on Sessionly looks like. Tap around."}</p>
+          <div className="min-w-0">
+            <h1 className="text-2xl font-semibold tracking-tight">{host.firstName ? `Hi, ${host.firstName}` : "Let's run a great day"}</h1>
+            <p className="text-sm text-muted">{supabaseConfigured ? "Tuesday, June 9 · 3 sessions today · 92% attendance this month" : host.firstName ? "Here's your day at a glance. Tap around." : "Here's what running your day on Sessionly looks like. Tap around."}</p>
           </div>
         </div>
         <div className="flex gap-2 flex-wrap">
